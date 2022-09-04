@@ -25,7 +25,7 @@ class Country_infoViewController: UIViewController {
     
     var name = ""
     var capital = ""
-    var population = ""
+    var population = 0
     var continent = ""
     var about = ""
     
@@ -103,18 +103,16 @@ extension Country_infoViewController {
        
     func addImage(imageUrl: String, position: CGFloat) {
         let imageView = UIImageView()
-        
+        imageView.image = UIImage(named: "noImageAvailable")
         self.apiService.downloadImage(urlString: imageUrl, completion: { [weak self] result in
             print(imageUrl)
-            
-            
+        
             switch result{
             case .success(let image):
                 imageView.image = image
                 
             case .failure(let error):
                 print(error)
-                //imageView.image = UIImage(named: "noImageAvalable")
             }
         })
         
@@ -124,23 +122,18 @@ extension Country_infoViewController {
     }
 
     func configurateScrollTextView() {
-        
-        NSLayoutConstraint.activate([
-            scrollTextView.topAnchor.constraint(equalTo: scrollImageView.bottomAnchor),
-            scrollTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollTextView.heightAnchor.constraint(equalTo: view.heightAnchor)
-        ])
         labelName.text = name
         labelCapital.text = capital
-        labelPopulation.text = Spaces(population)
+        labelPopulation.text = spaces(population)
         labelContinent.text = continent
         labelAbout.text = about
     }
-    func Spaces(_ string: String) -> String{
-        var str = string
-        str.insert(" ", at: str.index(str.endIndex, offsetBy: -6))
-        str.insert(" ", at: str.index(str.endIndex, offsetBy: -3))
+    func spaces(_ int: Int) -> String{
+        var str = String(int)
+        if str.count >= 6 {
+            str.insert(" ", at: str.index(str.endIndex, offsetBy: -6))
+            str.insert(" ", at: str.index(str.endIndex, offsetBy: -3))
+        }
         return str
     }
 }
