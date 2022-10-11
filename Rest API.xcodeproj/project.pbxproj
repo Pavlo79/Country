@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE567C0728C7B623002B68DB /* Country_infoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE567C0628C7B61F002B68DB /* Country_infoViewModel.swift */; };
 		CEF64E7B2896C265009D0940 /* Country_infoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF64E4F2896A5E9009D0940 /* Country_infoViewController.swift */; };
 		F38FA9F62459C47100599E54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38FA9F52459C47100599E54 /* AppDelegate.swift */; };
 		F38FA9F82459C47100599E54 /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38FA9F72459C47100599E54 /* CountryViewController.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE567C0628C7B61F002B68DB /* Country_infoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country_infoViewModel.swift; sourceTree = "<group>"; };
 		CE68DBE928946E2F00893A2A /* Rest API.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Rest API.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF64E4D2895714C009D0940 /* Rest APITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Rest APITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF64E4E2895714C009D0940 /* Rest APIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Rest APIUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				F38FAA272459CB8E00599E54 /* CountryViewModel.swift */,
+				CE567C0628C7B61F002B68DB /* Country_infoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F38FAA242459C48700599E54 /* Model.swift in Sources */,
+				CE567C0728C7B623002B68DB /* Country_infoViewModel.swift in Sources */,
 				F38FAA282459CB8E00599E54 /* CountryViewModel.swift in Sources */,
 				F38FAA2A2459D6B600599E54 /* CountryTableViewCell.swift in Sources */,
 				F38FA9F82459C47100599E54 /* CountryViewController.swift in Sources */,

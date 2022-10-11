@@ -9,7 +9,6 @@
 import Foundation
 
 class CountryViewModel {
-    
     private var apiService = ApiService()
     private var country = [Country]()
     private var country2 = [Country]()
@@ -17,41 +16,25 @@ class CountryViewModel {
     let CountryUrl = "https://rawgit.com/NikitaAsabin/799e4502c9fc3e0ea7af439b2dfd88fa/raw/7f5c6c66358501f72fada21e04d75f64474a7888/page1.json"
     
     func fetchCountriesData(completion: @escaping () -> ()) {
-        
         apiService.getCountryData(urlString: CountryUrl) { [weak self] (result) in
-            
             switch result {
-            case .success(let listOf):
-                self?.country = listOf.countries
-                self?.next = listOf.next
+            case .success(let countries):
+                self?.country = countries
                 completion()
             case .failure(let error):
-
-                print("Error processing json data: \(error)")
-            }
-        }
-        apiService.getCountryData(urlString: next) { [weak self] (result) in
-            
-            switch result {
-            case .success(let listOf):
-                self?.country2 = listOf.countries
-                completion()
-            case .failure(let error):
-
                 print("Error processing json data: \(error)")
             }
         }
     }
+    
     func numberOfRowsInSection(section: Int) -> Int {
-        country += country2
+        //country += country2
         if country.count != 0 {
             return country.count
         }
         return 0
     }
-    
     func itemAt (indexPath: IndexPath) -> Country {
         return country[indexPath.row]
     }
-
 }

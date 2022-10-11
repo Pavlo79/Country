@@ -14,29 +14,27 @@ class CountryTableViewCell: UITableViewCell {
     @IBOutlet weak var flag: UIImageView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var capital: UILabel!
-    @IBOutlet weak var description_small: UILabel!
+    @IBOutlet weak var descriptionSmall: UILabel!
 
     let apiService = ApiService()
-    var imageUrl : String?
-    var country : Country?
+    var imageUrl: String?
+    var country: Country?
     
     override func prepareForReuse(){
         super.prepareForReuse()
         flag.image = UIImage(named: "noImageAvailable")
     }
     
-    func setCellWithValuesOf(_ country:Country){
-        updateUI(name: country.name, capital: country.capital, description_small: country.description_small, imageUrl: country.country_info.flag)
+    func configure(_ country: Country){
+        updateUI(name: country.name, capital: country.capital, descriptionSmall: country.descriptionSmall, imageUrl: country.country_info.flag)
         self.country = country
     }
     
-    private func updateUI(name: String?, capital: String?, description_small: String?, imageUrl: String){
-        print(name)
-        
+    private func updateUI(name: String?, capital: String?, descriptionSmall: String?, imageUrl: String){
         self.imageUrl = imageUrl
         self.name.text = name
         self.capital.text = capital
-        self.description_small.text = description_small
+        self.descriptionSmall.text = descriptionSmall
         self.apiService.downloadImage(urlString: imageUrl, completion: { [weak self] result in
             guard let self = self else{
                 return

@@ -10,9 +10,7 @@ import UIKit
 
 class Country_infoViewController: UIViewController {
     
-    
     @IBOutlet weak var scrollImageView: UIScrollView!
-    
     @IBOutlet weak var scrollTextView: UIScrollView!
     @IBOutlet weak var labelName: UILabel!
     @IBOutlet weak var labelCapital: UILabel!
@@ -23,6 +21,7 @@ class Country_infoViewController: UIViewController {
     let pageControl = UIPageControl()
     var imagesURL : [String] = []
     
+    private var viewModel = Country_infoViewModel()
     var name = ""
     var capital = ""
     var population = 0
@@ -33,11 +32,8 @@ class Country_infoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         configurateScrollImageView()
         configurateScrollTextView()
-        configurateScrollTableView()
         
         view.addSubview(pageControl)
         pageControl.translatesAutoresizingMaskIntoConstraints = false
@@ -54,25 +50,19 @@ class Country_infoViewController: UIViewController {
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = UIColor.clear
         self.navigationController?.view.tintColor = UIColor.white
-        
     }
-    func configurateScrollTableView() {
-        
-    }
+   
     @objc func pageDidChange(sender: UIPageControl) {
         let ofsetX = UIScreen.main.bounds.width * CGFloat(pageControl.currentPage)
         scrollImageView.setContentOffset(CGPoint(x: ofsetX, y: 0), animated: true)
     }
 }
-
-
 //MARK: - UIScrollViewDelegate
 extension Country_infoViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         pageControl.currentPage = Int(scrollView.contentOffset.x / UIScreen.main.bounds.width)
     }
 }
-
 extension Country_infoViewController {
     func configurateScrollImageView() {
         view.addSubview(scrollImageView)
@@ -83,11 +73,8 @@ extension Country_infoViewController {
             scrollImageView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollImageView.heightAnchor.constraint(equalToConstant: 250)
         ])
-        
-        
         scrollImageView.contentSize = CGSize(width: Int(UIScreen.main.bounds.width) * imagesURL.count, height: 250)
         scrollImageView.isPagingEnabled = true
-        
         if imagesURL.isEmpty
         {
             let imageView = UIImageView()
@@ -100,12 +87,11 @@ extension Country_infoViewController {
             }
         }
     }
-       
     func addImage(imageUrl: String, position: CGFloat) {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "noImageAvailable")
-        self.apiService.downloadImage(urlString: imageUrl, completion: { [weak self] result in
-            print(imageUrl)
+        apiService.downloadImage(urlString: imageUrl, completion: { [weak self] result in
+            print("image url \(imageUrl)")
         
             switch result{
             case .success(let image):
@@ -120,7 +106,6 @@ extension Country_infoViewController {
         let screenWight = UIScreen.main.bounds.width
         imageView.frame = CGRect(x: screenWight * position, y: 0, width: screenWight, height: 250)
     }
-
     func configurateScrollTextView() {
         labelName.text = name
         labelCapital.text = capital
@@ -128,6 +113,7 @@ extension Country_infoViewController {
         labelContinent.text = continent
         labelAbout.text = about
     }
+    
     func spaces(_ int: Int) -> String{
         var str = String(int)
         if str.count >= 6 {

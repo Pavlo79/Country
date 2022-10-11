@@ -9,11 +9,15 @@
 import Foundation
 import UIKit
 
+
 class ApiService {
-    
-    func getCountryData(urlString: String,completion: @escaping (Result<CountriesData, Error>) -> Void) {
-                
-        guard let url = URL(string: urlString) else {return}
+    func getCountryData(urlString: String, countries:[Country] = [], completion: @escaping (Result<[Country], Error>) -> Void) {
+        guard let url = URL(string: urlString) else {
+            print(urlString)
+            DispatchQueue.main.async {
+                completion(.success(countries))
+            }
+            return}
         
         // Create URL Session - work on the background
         let dataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -42,21 +46,24 @@ class ApiService {
                 // Parse the data
                 let decoder = JSONDecoder()
                 let jsonData = try decoder.decode(CountriesData.self, from: data)
-                
-                // Back to the main thread
-                DispatchQueue.main.async {
-                    completion(.success(jsonData))
+                if let urlString = jsonData.next{
+                    self.getCountryData(urlString: urlString, countries:countries + jsonData.countries, completion: completion)
+                        
+                } else {
+                    DispatchQueue.main.async {
+                        completion(.success(countries + jsonData.countries))
+                    }
                 }
+                        
+                
             } catch let error {
                 completion(.failure(error))
             }
-            
         }
         dataTask.resume()
     }
     
     func downloadImage(urlString: String,completion: @escaping (Result<UIImage, Error>) -> Void) {
-        
         
         guard let url = URL(string: urlString) else {return}
         
@@ -88,7 +95,6 @@ class ApiService {
                 print("Empty Data")
                 return
             }
-            
             // Back to the main thread
             DispatchQueue.main.async {
                 completion(.success(image))
@@ -96,6 +102,5 @@ class ApiService {
         }
         dataTask.resume()
     }
-    
 }
 

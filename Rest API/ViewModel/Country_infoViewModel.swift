@@ -7,3 +7,11 @@
 //
 
 import Foundation
+
+class Country_infoViewModel {
+     private let apiService = ApiService()
+    
+    
+    
+    
+}

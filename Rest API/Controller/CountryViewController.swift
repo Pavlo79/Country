@@ -16,13 +16,11 @@ class CountryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         loadCountriesData()
     }
     
     private func loadCountriesData() {
         viewModel.fetchCountriesData { [weak self] in
-            
             self?.tableView.dataSource = self
             self?.tableView.delegate = self
             self?.tableView.reloadData()
@@ -40,7 +38,7 @@ extension CountryViewController:UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CountryTableViewCell
         let country = viewModel.itemAt(indexPath: indexPath)
         
-        cell.setCellWithValuesOf(country)
+        cell.configure(country)
         return cell
     }
    
