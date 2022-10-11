@@ -15,7 +15,10 @@ class CountryTableViewCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var capital: UILabel!
     @IBOutlet weak var descriptionSmall: UILabel!
-
+    @IBAction func bb(_ sender: Any) {
+        apiService.uploadNextPage()
+    }
+    
     let apiService = ApiService()
     var imageUrl: String?
     var country: Country?

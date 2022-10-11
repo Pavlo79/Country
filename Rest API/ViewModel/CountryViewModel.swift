@@ -10,31 +10,30 @@ import Foundation
 
 class CountryViewModel {
     private var apiService = ApiService()
-    private var country = [Country]()
-    private var country2 = [Country]()
-    private var next: String = "https://rawgit.com/NikitaAsabin/b37bf67c8668d54a517e02fdf0e0d435/raw/2021870812a13c6dbae1f8a0e9845661396c1e8d/page2.json"
-    let CountryUrl = "https://rawgit.com/NikitaAsabin/799e4502c9fc3e0ea7af439b2dfd88fa/raw/7f5c6c66358501f72fada21e04d75f64474a7888/page1.json"
+    //private var country = apiService.country
+    private var url: String = "https://rawgit.com/NikitaAsabin/799e4502c9fc3e0ea7af439b2dfd88fa/raw/7f5c6c66358501f72fada21e04d75f64474a7888/page1.json"
+
     
     func fetchCountriesData(completion: @escaping () -> ()) {
-        apiService.getCountryData(urlString: CountryUrl) { [weak self] (result) in
+        apiService.getCountryData(urlString: url) { [weak self] (result) in
             switch result {
             case .success(let countries):
-                self?.country = countries
+                self?.apiService.country = countries.countries
                 completion()
             case .failure(let error):
                 print("Error processing json data: \(error)")
             }
         }
+        //apiService.uploadNextPage()
     }
     
     func numberOfRowsInSection(section: Int) -> Int {
-        //country += country2
-        if country.count != 0 {
-            return country.count
+        if apiService.country.count != 0 {
+            return apiService.country.count
         }
         return 0
     }
     func itemAt (indexPath: IndexPath) -> Country {
-        return country[indexPath.row]
+        return apiService.country[indexPath.row]
     }
 }
